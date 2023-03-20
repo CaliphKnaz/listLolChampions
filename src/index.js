@@ -25,10 +25,18 @@ const search = document.querySelector('input')
 const champBlurb = document.querySelector('#champBlurb')
 const champImage = document.getElementById("champImage")
 const champTitle = document.getElementById("champTitle")
+const champHP = document.getElementById("HP")
+const champMP = document.getElementById("MP")
+const champAttack = document.getElementById("Attack")
+const champDefense = document.getElementById("Defense")
+const champMagic = document.getElementById("Magic")
+
 
 champBlurb.textContent = ''
 champImage.src = ''
 champTitle.textContent = ''
+champHP.textContent = ''
+
 
 championForm.addEventListener('submit', (e) => {
 
@@ -48,8 +56,22 @@ championForm.addEventListener('submit', (e) => {
                 let champs = data.data
                 blurb = (champs[champion].lore)
                 title = (champs[champion].id)
+                hp = (champs[champion].stats.hp)
+                mp = (champs[champion].stats.mp)
+                Attack = (champs[champion].info.attack)
+                Defense = (champs[champion].info.defense)
+                Magic = (champs[champion].info.magic)
+
                 champBlurb.textContent = blurb
                 champTitle.textContent = title
+                champHP.textContent = "Hitpoints: " + hp
+                champMP.textContent = "Mana: " + mp
+                champAttack.textContent = "Attack: " + Attack
+                champDefense.textContent = "Defense: " + Defense
+                champMagic.textContent = "Magic: " + Magic
+
+
+
 
                 champImage.src = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champion + "_0.jpg"
 
