@@ -77,7 +77,16 @@ function userValue(champList1) {
             displayImage(champion)
 
         } else {
+            champTitle.textContent = 'Lost Poros'
             champBlurb.textContent = 'Please input a valid champion'
+            champImage.src = "https://nexus.leagueoflegends.com/wp-content/uploads/2018/11/poros_banner-1_slno1owbdsxulmdvqomp.jpg"
+            champHP.textContent = ''
+            champMP.textContent = ''
+            champAttack.textContent = ''
+            champDefense.textContent = ''
+            champMagic.textContent = ''
+
+
         }
     })
 }
