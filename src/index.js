@@ -11,6 +11,25 @@ const champAttack = document.getElementById("Attack")
 const champDefense = document.getElementById("Defense")
 const champMagic = document.getElementById("Magic")
 
+function champArray() {
+    fetch('http://ddragon.leagueoflegends.com/cdn/13.5.1/data/en_US/champion.json')
+        .then(res => res.json())
+        .then(data => {
+            try {
+                let champs = data.data
+                let champList1 = []
+                for (let char in champs) {
+                    champList1.push(char)
+                }
+                return champList1
+            } catch (error) {
+                console.log(error)
+            }
+        })
+
+}
+
+
 function fillDropdown() {
     const datalist = document.getElementById("champList") // assign the datalist variable to the elementid ChampList
 
@@ -21,11 +40,18 @@ function fillDropdown() {
         .then(data => {
             try {
                 let champs = data.data
+                let champList1 = []
+
                 for (let char in champs) {
+                    champList1.push(char)
+
                     var option = document.createElement('option')
                     option.value = (champs[char].id)
                     datalist.appendChild(option)
                 }
+                console.log(champList1)
+                userValue(champList1)
+
             } catch (error) {
                 console.log(error)
             }
@@ -37,17 +63,22 @@ function fillDropdown() {
 
 
 
-function userValue() {
+function userValue(champList1) {
+    console.log(champList1)
     //an event listerner for when the user submits their search
     championForm.addEventListener('submit', (e) => {
         //prevent the webpage from reloading
         e.preventDefault()
         //store the users search value
         const champion = search.value
-        displayINFO(champion)
-        displayImage(champion)
-        console.log(champion)
+        //search array of valid champions to check if user entry is valid -- using some method check whether an element in the arrary mataches user input
+        if (champList1.some(i => champion.includes(i))) {
+            displayINFO(champion)
+            displayImage(champion)
 
+        } else {
+            champBlurb.textContent = 'Please input a valid champion'
+        }
     })
 }
 
@@ -57,24 +88,29 @@ function displayINFO(champion) {
     fetch('http://ddragon.leagueoflegends.com/cdn/13.5.1/data/en_US/champion/' + champion + '.json')
         .then(res => res.json())
         .then(data => {
-            //retrieve the appropriate data from the api and load it on the HTML page
-            let champs = data.data
-            blurb = (champs[champion].lore)
-            title = (champs[champion].id)
-            hp = (champs[champion].stats.hp)
-            mp = (champs[champion].stats.mp)
-            Attack = (champs[champion].info.attack)
-            Defense = (champs[champion].info.defense)
-            Magic = (champs[champion].info.magic)
+            try {
+                //retrieve the appropriate data from the api and load it on the HTML page
+                let champs = data.data
+                blurb = (champs[champion].lore)
+                title = (champs[champion].id)
+                hp = (champs[champion].stats.hp)
+                mp = (champs[champion].stats.mp)
+                Attack = (champs[champion].info.attack)
+                Defense = (champs[champion].info.defense)
+                Magic = (champs[champion].info.magic)
 
-            champBlurb.textContent = blurb
-            champTitle.textContent = title
+                champBlurb.textContent = blurb
+                champTitle.textContent = title
 
-            champHP.textContent = "Hitpoints: " + hp
-            champMP.textContent = "Mana: " + mp
-            champAttack.textContent = "Attack: " + Attack
-            champDefense.textContent = "Defense: " + Defense
-            champMagic.textContent = "Magic: " + Magic
+                champHP.textContent = "Hitpoints: " + hp
+                champMP.textContent = "Mana: " + mp
+                champAttack.textContent = "Attack: " + Attack
+                champDefense.textContent = "Defense: " + Defense
+                champMagic.textContent = "Magic: " + Magic
+            } catch (error) {
+                console.log(error)
+            }
+
         })
 }
 
@@ -91,7 +127,7 @@ function displayImage(champion) {
 function main() {
     fillDropdown()
     userValue()
-
+    champArray()
 }
 
 main()
