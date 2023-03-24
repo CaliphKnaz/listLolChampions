@@ -149,4 +149,10 @@ div.desc2 {
     margin-right: auto;
 }
 
+#stats {
+    text-align: inherit;
+    font-size: medium;
+    margin-top: 0%;
+}
+
 </style>
