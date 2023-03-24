@@ -28,8 +28,6 @@ input {
 
 input [placeholder] {
     border: 1px solid #204b20;
-
-
 }
 
 form {
@@ -151,4 +149,4 @@ div.desc2 {
     margin-right: auto;
 }
 
-image </style>
+</style>
